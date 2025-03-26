@@ -108,12 +108,12 @@ const Main = () => {
 
   const normalizedDrivingState = navigationState?.velocityData;
 
-  if (!starting) {
-    return null;
-  }
-
   return (
-    <div className="w-full h-[480px] bg-[#A6A6A6]">
+    <div
+      className={`w-full h-[480px]  ${
+        starting ? "bg-[#A6A6A6]" : "bg-zinc-800"
+      }`}
+    >
       <div
         className={`${
           starting ? "opacity-1" : "opacity-0"
