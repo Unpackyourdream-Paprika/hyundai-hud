@@ -10,9 +10,9 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 let win;
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
+    width: 1920,
     // 원하는 너비
-    height: 480,
+    height: 1080,
     // 원하는 높이
     frame: false,
     // 프레임 제거

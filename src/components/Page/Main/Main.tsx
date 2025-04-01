@@ -16,8 +16,8 @@ const Main = () => {
     setStartFlagState,
     setCarSelectData,
   } = useSocket(
-    // "http://192.168.10.101:4000"
-    "http://192.168.0.39:4000"
+    "http://192.168.10.101:4000"
+    // "http://192.168.0.39:4000"
   );
 
   const [starting, setStarting] = useState(false);
@@ -146,10 +146,10 @@ const Main = () => {
                 : "left-[48%]"
             }`}
           >
-            <div className="text-6xl font-bold">
+            <div className="text-[120px] font-bold">
               {normalizedDrivingState.velocity}
             </div>
-            <div className="text-xl text-[#5D5D5D] font-bold ">km/h</div>
+            <div className="text-[48px] text-[#5D5D5D] font-bold ">km/h</div>
           </div>
           {normalizedDrivingState.enableHDA && (
             <div
@@ -172,8 +172,8 @@ export default Main;
 
 const LeftLineRoadDivider = styled.div`
   position: absolute;
-  width: 2px;
-  height: 340px;
+  width: 16px;
+  height: 100%;
   left: 30%;
   background: linear-gradient(
     to bottom,
@@ -189,8 +189,8 @@ const LeftLineRoadDivider = styled.div`
 
 const RightLineRoadDivider = styled.div`
   position: absolute;
-  width: 2px;
-  height: 340px;
+  width: 16px;
+  height: 100%;
   top: 10%;
   right: 30%;
   background: linear-gradient(

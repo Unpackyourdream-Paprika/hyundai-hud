@@ -38,8 +38,8 @@ function createWindow() {
   //   },
   // });
   win = new BrowserWindow({
-    width: 800, // 원하는 너비
-    height: 480, // 원하는 높이
+    width: 1920, // 원하는 너비
+    height: 1080, // 원하는 높이
     frame: false, // 프레임 제거
     titleBarStyle: "hidden", // 타이틀 바 숨기기
     transparent: true, // 배경 투명하게 (선택사항)
