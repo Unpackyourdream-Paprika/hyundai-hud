@@ -16,8 +16,8 @@ const Main = () => {
     setStartFlagState,
     setCarSelectData,
   } = useSocket(
-    "http://192.168.10.101:4000"
-    // "http://192.168.0.39:4000"
+    // "http://192.168.10.101:4000"
+    "http://192.168.0.39:4000"
   );
 
   const [starting, setStarting] = useState(false);
@@ -110,7 +110,7 @@ const Main = () => {
 
   return (
     <div
-      className={`w-full h-[480px]  ${
+      className={`w-full h-[100vh]  ${
         starting ? "bg-[#A6A6A6]" : "bg-zinc-800"
       }`}
     >
