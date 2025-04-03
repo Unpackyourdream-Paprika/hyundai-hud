@@ -130,9 +130,9 @@ const Main = () => {
 
   return (
     <div
-      className={`w-full h-[100vh]  ${
-        starting ? "bg-black " : "bg-zinc-800"
-      } bg-opacity-20`}
+      className={`w-full h-[100vh]  ${starting ? "bg-black " : "bg-zinc-800"} ${
+        starting ? "bg-opacity-10" : "bg-opacity-100"
+      } `}
     >
       <div
         className={`${
@@ -171,7 +171,7 @@ const Main = () => {
           <img
             src={"/hud/hud-left3.png"}
             alt="left-red-line"
-            className="absolute left-[15%] bottom-[40%]"
+            className="absolute left-[18%] bottom-[30%]"
           />
 
           <RightLineRoadDivider />
@@ -179,7 +179,7 @@ const Main = () => {
           <img
             src={"/hud/hud-right3.png"}
             alt="right-red-line"
-            className="absolute right-[15%] bottom-[40%]"
+            className="absolute right-[18%] bottom-[30%]"
           />
 
           <div
@@ -192,17 +192,29 @@ const Main = () => {
             <div className="text-[120px] font-bold">
               {normalizedDrivingState.velocity}
             </div>
-            <div className="text-[48px] text-[#5D5D5D] font-bold ">km/h</div>
+            <div className="text-[48px] text-[#5D5D5D] -translate-y-12 font-bold ">
+              km/h
+            </div>
           </div>
           {normalizedDrivingState.enableHDA && (
             <div
-              className={`absolute flex flex-col items-center bottom-[130px] ${
+              className={`absolute flex flex-row items-center bottom-[180px] ${
                 normalizedDrivingState?.bNotifyLimitSpeed
                   ? "left-[26%]"
                   : "left-[32%]"
               }`}
             >
-              <img src={"/left-electron/adcontrol.png"} alt="scc-img" />
+              <img src={"/hda4/hda4-icon.png"} alt="hda4-icons" />
+              <div>
+                <p className="text-[72px]">
+                  {navigationState.velocityData.sCCTargetActorSpeed}
+                </p>
+                <p className="text-[#178BF5] font-bold text-[32px] -translate-y-4 text-center">
+                  CRUISE
+                </p>
+              </div>
+
+              {/* <img src={"/left-electron/adcontrol.png"} alt="scc-img" /> */}
             </div>
           )}
         </div>
@@ -216,16 +228,16 @@ export default Main;
 const LeftLineRoadDivider = styled.div`
   position: absolute;
   width: 16px;
-  height: 70%;
-  left: 20%;
+  height: 50%;
+  top: 30%;
+  left: 25%;
   background: linear-gradient(
     to bottom,
     transparent,
     #858484 20%,
     #858484 80%,
-    transparent
+    #858484 100%
   );
-  top: 20%;
   transform-style: preserve-3d;
   transform: rotate3d(1, -1, -1, -60deg);
 `;
@@ -233,15 +245,15 @@ const LeftLineRoadDivider = styled.div`
 const RightLineRoadDivider = styled.div`
   position: absolute;
   width: 16px;
-  height: 70%;
-  top: 20%;
-  right: 20%;
+  height: 50%;
+  top: 30%;
+  right: 25%;
   background: linear-gradient(
     to bottom,
     transparent,
     #858484 20%,
     #858484 80%,
-    transparent
+    #858484 100%
   );
   transform-style: preserve-3d;
   transform: rotate3d(1, 1, 1, -60deg);

@@ -4,8 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ['Pretendard', 'sans-serif'], // Pretendard 추가
-        Roboto: ['Roboto', 'sans-serif'], //Roboto 추가
+        pretendard: ["Pretendard", "sans-serif"], // Pretendard 추가
+        Roboto: ["Roboto", "sans-serif"], //Roboto 추가
+        genesisSansRegular: ["GenesisSansRegular", "sans-serif"],
+        genesisSansMedium: ["GenesisSansMedium", "sans-serif"],
       },
     },
   },

@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Hyundai-Sans-Regular";
-  src: url("/fonts/HyundaiSansHeadOffice-Regular.woff2") format("woff2"),
-    url("/fonts/HyundaiSansHeadOffice-Regular.woff") format("woff");
-  font-weight: 500;
+  font-family: "GenesisSansRegular";
+  src: url("/fonts/GenesisSansTextKROTFRegular.otf") format("opentype");
+  font-weight: 400;
   font-style: light;
   font-display: swap;
 }
 
+/* GenesisSans Text KR OTF */
+/* opentype */
+
 @font-face {
-  font-family: "Hyundai Sans";
-  src: url("/fonts/HyundaiSansHeadOffice-Light.woff2") format("woff2"),
-    url("/fonts/HyundaiSansHeadOffice-Light.woff") format("woff");
+  font-family: "GenesisSansMedium";
+  src: url("/fonts/GenesisSansTextKROTFMedium.otf") format("opentype");
   font-weight: 500;
   font-style: light;
   font-display: swap;
@@ -116,8 +117,8 @@
 }
 
 :root {
-  font-family: "Hyundai-Sans-Regular", Inter, system-ui, Avenir, Helvetica,
-    Arial, sans-serif;
+  font-family: "GenesisSansMedium", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
 

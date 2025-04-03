@@ -216,7 +216,7 @@ export default function useSocket(url: string) {
       drivingTime: 0,
       idleTime: 0,
       currentLimitSpeed: 0,
-      enableHDA: false,
+      enableHDA: true,
       notifyDisableHDA: false,
       sCC: false,
       sCCTargetActorSpeed: 110,

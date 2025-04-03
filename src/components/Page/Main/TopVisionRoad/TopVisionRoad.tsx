@@ -12,8 +12,9 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
   );
 
   const firstNavigation = {
-    isVisible: navigationState?.velocityData.bEnableSpline || false,
-    name: navigationState?.velocityData.splineName || "",
+    isVisible: true,
+    // isVisible: navigationState?.velocityData.bEnableSpline || false,
+    name: "염곡IC에서 '양재대로, 서울추모공원' 방면으로 오른쪽 방향",
     remainingDistance:
       navigationState?.velocityData.remainingDistanceToNextSpline || 0,
   };
@@ -25,13 +26,13 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
   };
 
   return (
-    <div className="flex flex-row gap-[60px] items-start w-full h-full p-[200px]  justify-center">
+    <div className="flex flex-row gap-[60px] items-start w-full h-full p-[100px]  justify-center">
       {firstNavigation.isVisible && (
         <div className="h-[120px]   text-white  flex items-center px-3">
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-16 ">
             <div className="flex items-center justify-center">
               <img
-                className="w-[64px] h-[64px]"
+                className="w-[48px] h-[48px]"
                 src={
                   firstNavigation.name ===
                   "염곡IC에서 '양재대로, 서울추모공원' 방면으로 오른쪽 방향"
@@ -55,16 +56,15 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
                 alt="direction"
               />
             </div>
-            <div className="flex flex-row">
-              <p className="text-[26px] font-medium">
+            <div className="flex flex-col">
+              <p className="text-[26px] font-bold ">{firstNavigation.name}</p>
+
+              <p className="text-[26px] font-bold">
                 {firstNavigation.remainingDistance >= 1000
                   ? `${(firstNavigation.remainingDistance / 1000).toFixed(
                       1
                     )} km`
                   : `${firstNavigation.remainingDistance} m`}
-              </p>
-              <p className="text-[26px] truncate max-w-[230px]">
-                {firstNavigation.name}
               </p>
             </div>
           </div>
