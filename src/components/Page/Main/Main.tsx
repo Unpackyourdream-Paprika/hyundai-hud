@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import useSocket from "../../../hooks/useSocket";
 import { resetAllStores } from "../../../stroe/useResetAllStore";
+import TopVisionRoad from "./TopVisionRoad/TopVisionRoad";
 
 const Main = () => {
-  const [step, setStep] = useState<number>(0);
   const {
     navigationState,
-    autoDrivingState,
-    mdaqButtonState,
+
     startFlagState,
     setNavigationState,
     setAutoDrivingState,
     setMdaqButtonState,
     setStartFlagState,
-    setCarSelectData,
   } = useSocket(
     // "http://192.168.10.101:4000"
     "http://192.168.0.39:4000"
@@ -81,13 +79,6 @@ const Main = () => {
         status: false,
       });
 
-      setCarSelectData({
-        weather: 0,
-        carSelection: 0,
-        time: 0,
-        start: false,
-      });
-
       setStartFlagState({
         start: false,
         customerid: 0,
@@ -137,13 +128,21 @@ const Main = () => {
             </div>
           )}
 
+          <TopVisionRoad navigationState={navigationState} />
+
           <LeftLineRoadDivider />
+
+          <img src={"/hud/hud-left.png"} alt="left-red-line" />
+
           <RightLineRoadDivider />
+
+          <img src={"/hud/hud-right.png"} alt="right-red-line" />
+
           <div
             className={`absolute flex flex-col items-center bottom-[120px] ${
               normalizedDrivingState?.bNotifyLimitSpeed
                 ? "left-[42%]"
-                : "left-[48%]"
+                : "left-[46%]"
             }`}
           >
             <div className="text-[120px] font-bold">
@@ -173,8 +172,8 @@ export default Main;
 const LeftLineRoadDivider = styled.div`
   position: absolute;
   width: 16px;
-  height: 100%;
-  left: 30%;
+  height: 70%;
+  left: 20%;
   background: linear-gradient(
     to bottom,
     transparent,
@@ -182,7 +181,7 @@ const LeftLineRoadDivider = styled.div`
     #858484 80%,
     transparent
   );
-  top: 10%;
+  top: 20%;
   transform-style: preserve-3d;
   transform: rotate3d(1, -1, -1, -60deg);
 `;
@@ -190,9 +189,9 @@ const LeftLineRoadDivider = styled.div`
 const RightLineRoadDivider = styled.div`
   position: absolute;
   width: 16px;
-  height: 100%;
-  top: 10%;
-  right: 30%;
+  height: 70%;
+  top: 20%;
+  right: 20%;
   background: linear-gradient(
     to bottom,
     transparent,

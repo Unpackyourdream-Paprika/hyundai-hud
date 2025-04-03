@@ -6,21 +6,23 @@ export interface StartFlagData {
   customerid: number;
 }
 
-export interface PageState {
-  message: string;
-  data: {
-    drivingMode: number;
-    drivingMap: number;
-    simRacingMap: number;
-    weather: number;
-    time: number;
-    traffic: number;
-    carSelection: number;
-    pageNum: number;
-  };
+export interface CarSelectData {
+  weather: number;
+  time: number;
+  carSelection: number;
+  map: number;
+  start: boolean;
 }
+
 export interface NavigationData {
   velocityData: VelocityData;
+  playerLaneIndex: number;
+  detailPlayerLaneIndex: number;
+  lanes: LaneData[];
+}
+
+export interface DrivingModeData {
+  drivingMode: string;
 }
 
 export interface VelocityData {
@@ -28,6 +30,9 @@ export interface VelocityData {
   // 속도
   angle: number;
   // 게임 앵글
+
+  autoParkingState: number;
+
   offsetX: number;
   // 게임 좌표 X
   offsetY: number;
@@ -53,21 +58,9 @@ export interface VelocityData {
   bEnableSpline: boolean;
   // 500m 전 알림
 
-  distance500: number;
-  // 500 전 거리
-
-  direction500: string;
-  // 500 전 방향
-
   // 500m 전 알림2
   bEnableNextSpline: boolean;
   // 다음 500전 알림
-
-  distanceNext500: number;
-
-  // 다음 500m 거리
-
-  directionNext500: string;
 
   // 다음 500m 방향 string
 
@@ -82,6 +75,7 @@ export interface VelocityData {
   // 그래프용 rpm
 
   hor: number;
+  bHighwayForHOR: boolean;
   //  hor 핸들 잘 안잡고 있을때 알람  1,2,3,4 단계로 피그마 비상정지 체크
   hORLevel: number;
 
@@ -89,45 +83,47 @@ export interface VelocityData {
   // eor
   eORLevel: number;
 
-  dca: number;
-  dCALevel: number;
+  dca: number; // 경고 AEB (DCA 레벨)
+  dCALevel: number; // 경고 AEB (DCA 레벨)
 
-  sound: number;
+  sound: number; // -> 그래프 데이터
 
-  acceleator: number;
+  acceleator: number; // -> 그래프 데이터
 
-  brake: number;
+  brake: number; // 언리얼 구조체에는 없음
 
-  carName: number;
+  carName: number; // -> 그래프 데이터
 
-  drivingDistance: number;
+  drivingDistance: number; // -> 그래프 데이터
 
-  drivingTime: number;
+  drivingTime: number; // -> 그래프 데이터
 
-  idleTime: number;
+  idleTime: number; // -> 그래프 데이터
 
-  currentLimitSpeed: number;
+  currentLimitSpeed: number; // 현재 제한속도
 
-  enableHDA: boolean;
+  enableHDA: boolean; // enableHDA Active
 
-  notifyDisableHDA: boolean;
+  notifyDisableHDA: boolean; // HDA 끝나는 지점에 도착하기 전에 알려줌
 
-  scc: boolean;
+  sCC: boolean; // SCC 활성화 여부
+  bTargetLaneActive: boolean; // bTargetLaneActive 차간거리 액티브
+  sCCTargetActorSpeed: number; // SCC 상태일 때 제한 속도
 
-  sccSpeed: number;
+  targetLaneIndex: number; // 차간 거리 단계 인덱스 0 ~ 4
 
-  targetDistance: number;
+  lFA: boolean; // LFA 활성화 여부
 
-  lfa: boolean;
+  moveLeft: boolean; // 좌회전 깜빡이, HDA4 에서 함께 켜지면 Active 발동
+  moveRight: boolean; // 우회전 깜빡이, HDA4 에서 함께 켜지면 Active 발동
 
-  horLevel: number;
-
-  eorLevel: number;
-  moveLeft: boolean;
-  moveRight: boolean;
-
-  remainingDistanceToLimitSpeed: number;
-  bNotifyLimitSpeed: boolean;
+  bTargetLaneIndexActive: boolean; // 차간거리 모달 전용 Active
+  bParkingZone: boolean; // 주차구역 Active 뷰  주차장 진입 여부
+  remainingDistanceToLimitSpeed: number; // 제한속도 남은거리
+  bNotifyLimitSpeed: boolean; // 단속카메라 단속 카메라 (현재 위치가 단속 카메라 구간인지)
+  bReadyForChangeLane: boolean;
+  bEnableChangeLaneToLeft: boolean;
+  bEnableChangeLaneToRight: boolean;
 }
 
 export interface LaneData {
@@ -156,17 +152,21 @@ export interface StartingSettingData {
   weather: number;
   carSelection: number;
   time: number;
-  start: boolean;
+}
+
+export interface ParkingButtonEvent {
+  activeButtonParking: number;
 }
 
 export default function useSocket(url: string) {
   const [socket, setSocket] = useState<Socket | null>(null);
   // const [speed, setSpeed] = useState<number>(0);
 
-  const [CarSelectData, setCarSelectData] = useState<StartingSettingData>({
-    weather: 0,
-    carSelection: 0,
-    time: 0,
+  const [carSelectState, setCarSelectState] = useState<CarSelectData>({
+    weather: 1,
+    time: 1,
+    carSelection: 1,
+    map: 1,
     start: false,
   });
 
@@ -187,24 +187,23 @@ export default function useSocket(url: string) {
       velocity: 0,
       angle: 0,
       offsetX: 0,
+      autoParkingState: 0,
       offsetY: 0,
       gear: "P",
       bActivate: false,
       remainingDistanceToDest: 0,
       bEnableSpline: false, // 처음
       splineName: "", // 첫번째 네이밍
-      direction500: "", // 처음
-      distance500: 0, // 처음
       remainingDistanceToNextSpline: 0, // 처음
       nextSplineName: "", // 두번째 네이밍
       bEnableNextSpline: false, // 두번째
-      directionNext500: "", // 두번째
-      distanceNext500: 0, // 두번째
       nextSplineDistance: 0, // 두번째
       torque: 0,
       rpm: 0,
       hor: 0,
       hORLevel: 0,
+      // 손 놓고 있을때가 true ,
+      bHighwayForHOR: false,
       eor: 0,
       eORLevel: 0,
       dca: 0,
@@ -219,17 +218,72 @@ export default function useSocket(url: string) {
       currentLimitSpeed: 0,
       enableHDA: false,
       notifyDisableHDA: false,
-      scc: false,
-      sccSpeed: 0,
-      targetDistance: 0,
-      lfa: false,
-      horLevel: 0,
-      eorLevel: 0,
+      sCC: false,
+      sCCTargetActorSpeed: 110,
+      lFA: false,
       moveLeft: false,
       moveRight: false,
       remainingDistanceToLimitSpeed: 100,
       bNotifyLimitSpeed: false,
+      targetLaneIndex: 0,
+      bTargetLaneActive: false,
+      bTargetLaneIndexActive: false,
+      bParkingZone: false,
+      bReadyForChangeLane: false,
+      bEnableChangeLaneToLeft: false,
+      bEnableChangeLaneToRight: false,
     },
+    playerLaneIndex: 2,
+    detailPlayerLaneIndex: 0,
+    // lanes: [],
+    // max distance 60 < 이상 이면 차 안보임 지금
+    lanes: [
+      {
+        laneIndex: 1,
+        vehicleData: [],
+      },
+      {
+        laneIndex: 2,
+        vehicleData: [
+          // { playerToDistance: -3.5 },
+          { playerToDistance: 4, trafficVehicleTypeIndex: 1 },
+          // { playerToDistance: 6.2 },
+        ],
+      },
+      {
+        laneIndex: 3,
+        vehicleData: [
+          { playerToDistance: 0, trafficVehicleTypeIndex: 1 },
+          // { playerToDistance: -10.9 },
+          // { playerToDistance: -15.4 },
+          // { playerToDistance: -12.3 },
+        ],
+      },
+      {
+        laneIndex: 4,
+        vehicleData: [
+          // { playerToDistance: 6.2 }
+        ],
+      },
+      {
+        laneIndex: 5,
+        vehicleData: [
+          // { playerToDistance: 6.9 }, { playerToDistance: 8.5 }
+        ],
+      },
+      {
+        laneIndex: 6,
+        vehicleData: [
+          // { playerToDistance: 6.9 }, { playerToDistance: 8.5 }
+        ],
+      },
+      {
+        laneIndex: 7,
+        vehicleData: [
+          // { playerToDistance: 6.9 }, { playerToDistance: 8.5 }
+        ],
+      },
+    ],
   });
 
   const [autoDrivingState, setAutoDrivingState] = useState<AutoDriveData>({
@@ -249,6 +303,14 @@ export default function useSocket(url: string) {
     customerid: 0,
   });
 
+  // SCANNER = 'SCANeR',
+  // N_WORLD = 'N World',
+  // TWIN_WORLD = 'Twin World',
+  // SIM_WORLD = 'Sim World',
+  // REPLAY = 'Replay',
+  const [drivingModeState, setDrivingModeState] = useState<DrivingModeData>({
+    drivingMode: "SCANeR",
+  });
   // const []
 
   useEffect(() => {
@@ -284,9 +346,10 @@ export default function useSocket(url: string) {
       console.log("VehicleData state received:", state);
     });
 
-    socketInstance.on("CarSelectData", (state: StartingSettingData) => {
+    socketInstance.on("CarSelectData", (state: CarSelectData) => {
       console.log("CarSelectData state received:", state);
-      setCarSelectData(state);
+      // console.log(state, "state?");
+      setCarSelectState(state);
     });
 
     // 연결 종료 처리
@@ -305,7 +368,7 @@ export default function useSocket(url: string) {
     setAutoDrivingState,
     setMdaqButtonState,
     setStartFlagState,
-    CarSelectData,
-    setCarSelectData,
+    carSelectState,
+    setCarSelectState,
   };
 }
