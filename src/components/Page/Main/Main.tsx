@@ -7,12 +7,12 @@ import TopVisionRoad from "./TopVisionRoad/TopVisionRoad";
 const Main = () => {
   const {
     navigationState,
-
     startFlagState,
     setNavigationState,
     setAutoDrivingState,
     setMdaqButtonState,
     setStartFlagState,
+    setCarSelectState,
   } = useSocket(
     // "http://192.168.10.101:4000"
     "http://192.168.0.39:4000"
@@ -29,24 +29,22 @@ const Main = () => {
           velocity: 0,
           angle: 0,
           offsetX: 0,
+          autoParkingState: 0,
           offsetY: 0,
           gear: "P",
           bActivate: false,
           remainingDistanceToDest: 0,
           bEnableSpline: false,
           splineName: "",
-          direction500: "",
-          distance500: 0,
           remainingDistanceToNextSpline: 0,
           nextSplineName: "",
           bEnableNextSpline: false,
-          directionNext500: "",
-          distanceNext500: 0,
           nextSplineDistance: 0,
           torque: 0,
           rpm: 0,
           hor: 0,
           hORLevel: 0,
+          bHighwayForHOR: false,
           eor: 0,
           eORLevel: 0,
           dca: 0,
@@ -61,30 +59,60 @@ const Main = () => {
           currentLimitSpeed: 0,
           enableHDA: false,
           notifyDisableHDA: false,
-          scc: false,
-          sccSpeed: 0,
-          targetDistance: 0,
-          lfa: false,
-          horLevel: 0,
-          eorLevel: 0,
+          sCC: false,
+          sCCTargetActorSpeed: 0,
+          lFA: false,
           moveLeft: false,
           moveRight: false,
           remainingDistanceToLimitSpeed: 0,
           bNotifyLimitSpeed: false,
+          bTargetLaneIndexActive: false,
+          targetLaneIndex: 0,
+          bParkingZone: false,
+          bTargetLaneActive: false,
+          bReadyForChangeLane: false,
+          bEnableChangeLaneToLeft: false,
+          bEnableChangeLaneToRight: false,
         },
+        playerLaneIndex: 2,
+        detailPlayerLaneIndex: 0,
+        lanes: [
+          {
+            laneIndex: 1,
+            vehicleData: [],
+          },
+          {
+            laneIndex: 2,
+            vehicleData: [],
+          },
+          {
+            laneIndex: 3,
+            vehicleData: [],
+          },
+          {
+            laneIndex: 4,
+            vehicleData: [],
+          },
+          {
+            laneIndex: 5,
+            vehicleData: [],
+          },
+        ],
       });
 
-      // Reset auto driving state
-      setAutoDrivingState({
-        status: false,
+      // Reset other states
+      setAutoDrivingState({ status: false });
+      setCarSelectState({
+        weather: 1,
+        time: 1,
+        carSelection: 1,
+        map: 1,
+        start: false,
       });
-
       setStartFlagState({
         start: false,
         customerid: 0,
       });
-
-      // Reset MDAQ button state
       setMdaqButtonState({
         trunLamp: "",
         warningButton: false,
@@ -95,7 +123,7 @@ const Main = () => {
 
       resetAllStores();
     }
-  }, [startFlagState]);
+  }, [startFlagState.start]); // 의존성 배열을 객체의 특정 속성으로 변경
 
   const normalizedDrivingState = navigationState?.velocityData;
 

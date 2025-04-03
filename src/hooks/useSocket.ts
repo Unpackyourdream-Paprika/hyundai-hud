@@ -299,7 +299,7 @@ export default function useSocket(url: string) {
   });
 
   const [startFlagState, setStartFlagState] = useState<StartFlagData>({
-    start: true,
+    start: false,
     customerid: 0,
   });
 
@@ -311,7 +311,16 @@ export default function useSocket(url: string) {
   const [drivingModeState, setDrivingModeState] = useState<DrivingModeData>({
     drivingMode: "SCANeR",
   });
-  // const []
+
+  // activeButtonParking : boolean;
+  const sendActiveParkingData = <T>(eventName: string, data: T) => {
+    if (socket) {
+      socket.emit(eventName, data);
+      console.log(`Sending ${eventName}:`, data);
+    } else {
+      console.warn("Socket not connected. Cannot send data.");
+    }
+  };
 
   useEffect(() => {
     const socketInstance = io(url);
@@ -338,7 +347,7 @@ export default function useSocket(url: string) {
     });
 
     socketInstance.on("StartFlag", (state: StartFlagData) => {
-      // console.log("MDAQButtonData state received:", state);
+      console.log("StartFlag state received:", state);
       setStartFlagState(state);
     });
 
@@ -350,6 +359,11 @@ export default function useSocket(url: string) {
       console.log("CarSelectData state received:", state);
       // console.log(state, "state?");
       setCarSelectState(state);
+    });
+
+    socketInstance.on("DrivingMode", (state: DrivingModeData) => {
+      console.log("DrivingMode state received:", state);
+      setDrivingModeState(state);
     });
 
     // 연결 종료 처리
@@ -364,11 +378,14 @@ export default function useSocket(url: string) {
     autoDrivingState,
     mdaqButtonState,
     startFlagState,
+    carSelectState,
+    drivingModeState,
     setNavigationState,
     setAutoDrivingState,
     setMdaqButtonState,
     setStartFlagState,
-    carSelectState,
     setCarSelectState,
+    setDrivingModeState,
+    sendActiveParkingData,
   };
 }
