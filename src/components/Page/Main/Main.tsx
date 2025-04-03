@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import useSocket from "../../../hooks/useSocket";
 import { resetAllStores } from "../../../stroe/useResetAllStore";
 import TopVisionRoad from "./TopVisionRoad/TopVisionRoad";
+import HudCarComponents from "../../HudCar/HudCarComponents";
 
 const Main = () => {
   const {
@@ -130,8 +131,8 @@ const Main = () => {
   return (
     <div
       className={`w-full h-[100vh]  ${
-        starting ? "bg-[#A6A6A6]" : "bg-zinc-800"
-      }`}
+        starting ? "bg-black " : "bg-zinc-800"
+      } bg-opacity-20`}
     >
       <div
         className={`${
@@ -160,11 +161,26 @@ const Main = () => {
 
           <LeftLineRoadDivider />
 
-          <img src={"/hud/hud-left.png"} alt="left-red-line" />
+          {/* <img
+            src={"/hud/hud_car2.png"}
+            alt="car-image"
+            className="absolute left-[50%] bottom-[50%]  transform -translate-x-1/2 -translate-y-1/2"
+          /> */}
+          <HudCarComponents navigationState={navigationState} />
+
+          <img
+            src={"/hud/hud-left3.png"}
+            alt="left-red-line"
+            className="absolute left-[15%] bottom-[40%]"
+          />
 
           <RightLineRoadDivider />
 
-          <img src={"/hud/hud-right.png"} alt="right-red-line" />
+          <img
+            src={"/hud/hud-right3.png"}
+            alt="right-red-line"
+            className="absolute right-[15%] bottom-[40%]"
+          />
 
           <div
             className={`absolute flex flex-col items-center bottom-[120px] ${
