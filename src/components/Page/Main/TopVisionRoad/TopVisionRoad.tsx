@@ -6,15 +6,15 @@ interface TopVisionRoadProps {
 }
 
 export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
-  console.log(
-    navigationState?.velocityData.bEnableSpline,
-    " ??navigationState?.velocityData.bEnableSpline"
-  );
+  // console.log(
+  //   navigationState?.velocityData.bEnableSpline,
+  //   " ??navigationState?.velocityData.bEnableSpline"
+  // );
 
   const firstNavigation = {
-    isVisible: true,
-    // isVisible: navigationState?.velocityData.bEnableSpline || false,
-    name: "염곡IC에서 '양재대로, 서울추모공원' 방면으로 오른쪽 방향",
+    // isVisible: true,
+    isVisible: navigationState?.velocityData.bEnableSpline || false,
+    name: "",
     remainingDistance:
       navigationState?.velocityData.remainingDistanceToNextSpline || 0,
   };
@@ -51,6 +51,8 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
                     : firstNavigation.name ===
                       "'반포한강공원' 방면으로 오른쪽 도시고속도로 출구"
                     ? "/marker/road-out.png"
+                    : firstNavigation.name === "주차장 입구 방면으로 오른쪽 방향"
+                    ? "/marker/arrow-slight-right.png"
                     : "/marker/arrow-right.png"
                 }
                 alt="direction"

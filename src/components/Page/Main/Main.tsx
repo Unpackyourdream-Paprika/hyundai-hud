@@ -168,19 +168,21 @@ const Main = () => {
           /> */}
           <HudCarComponents navigationState={navigationState} />
 
-          <img
+          {/* 왼쪽 센서 이미지  */}
+          {/* <img
             src={"/hud/hud-left3.png"}
             alt="left-red-line"
             className="absolute left-[18%] bottom-[30%]"
-          />
+          /> */}
 
           <RightLineRoadDivider />
 
-          <img
+          {/* 오른쪽 센서 이미지  */}
+          {/* <img
             src={"/hud/hud-right3.png"}
             alt="right-red-line"
             className="absolute right-[18%] bottom-[30%]"
-          />
+          /> */}
 
           <div
             className={`absolute flex flex-col items-center bottom-[120px] ${
