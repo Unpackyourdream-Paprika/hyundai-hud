@@ -140,8 +140,8 @@ const Main = () => {
         } w-full  h-full flex justify-center items-center transition-all duration-700`}
       >
         <div className="relative flex items-center w-full h-full text-white">
-          {normalizedDrivingState?.bNotifyLimitSpeed && (
-            <div className="absolute z-20 flex flex-col justify-center w-14 left-[52%] bottom-[120px]">
+          {/* {!normalizedDrivingState?.bNotifyLimitSpeed && (
+            <div className="absolute z-20 flex flex-col justify-center w-14 left-[52%] bottom-[140px]">
               <div className="flex items-center justify-center ">
                 <img
                   src={"/left-electron/red-line.png"}
@@ -155,7 +155,7 @@ const Main = () => {
                 {normalizedDrivingState?.remainingDistanceToLimitSpeed}m
               </p>
             </div>
-          )}
+          )} */}
 
           <TopVisionRoad navigationState={navigationState} />
 
@@ -185,14 +185,14 @@ const Main = () => {
           /> */}
 
           <div
-            className={`absolute flex flex-col items-center bottom-[120px] ${
+            className={`absolute flex flex-col items-center bottom-[80px] ${
               normalizedDrivingState?.bNotifyLimitSpeed
                 ? "left-[42%]"
-                : "left-[46%]"
+                : "left-[48%]"
             }`}
           >
             <div className="text-[120px] font-bold">
-              {normalizedDrivingState.velocity}
+              {Math.abs(normalizedDrivingState.velocity)}
             </div>
             <div className="text-[48px] text-[#5D5D5D] -translate-y-12 font-bold ">
               km/h
@@ -200,14 +200,14 @@ const Main = () => {
           </div>
           {normalizedDrivingState.enableHDA && (
             <div
-              className={`absolute flex flex-row items-center bottom-[180px] ${
+              className={`absolute flex flex-row items-center bottom-[120px] ${
                 normalizedDrivingState?.bNotifyLimitSpeed
                   ? "left-[26%]"
-                  : "left-[32%]"
+                  : "left-[34%]"
               }`}
             >
               <img src={"/hda4/hda4-icon.png"} alt="hda4-icons" />
-              <div>
+              <div className="flex flex-col items-center justify-center">
                 <p className="text-[72px]">
                   {navigationState.velocityData.sCCTargetActorSpeed}
                 </p>

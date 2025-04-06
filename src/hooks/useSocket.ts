@@ -216,7 +216,7 @@ export default function useSocket(url: string) {
       drivingTime: 0,
       idleTime: 0,
       currentLimitSpeed: 0,
-      enableHDA: true,
+      enableHDA: false,
       notifyDisableHDA: false,
       sCC: false,
       sCCTargetActorSpeed: 110,
@@ -246,7 +246,7 @@ export default function useSocket(url: string) {
         laneIndex: 2,
         vehicleData: [
           // { playerToDistance: -3.5 },
-          { playerToDistance: 4, trafficVehicleTypeIndex: 1 },
+          { playerToDistance: 8, trafficVehicleTypeIndex: 1 },
           // { playerToDistance: 6.2 },
         ],
       },
@@ -299,7 +299,7 @@ export default function useSocket(url: string) {
   });
 
   const [startFlagState, setStartFlagState] = useState<StartFlagData>({
-    start: true,
+    start: false,
     customerid: 0,
   });
 
