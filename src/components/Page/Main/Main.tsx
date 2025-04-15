@@ -100,7 +100,7 @@ const Main = () => {
           },
         ],
       });
-
+      setStarting(false);
       // Reset other states
       setAutoDrivingState({ status: false });
       setCarSelectState({
