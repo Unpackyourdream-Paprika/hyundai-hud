@@ -14,7 +14,7 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
   const firstNavigation = {
     // isVisible: true,
     isVisible: navigationState?.velocityData.bEnableSpline || false,
-    name: "",
+    name: navigationState?.velocityData.splineName,
     remainingDistance:
       navigationState?.velocityData.remainingDistanceToNextSpline || 0,
   };
@@ -32,7 +32,7 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
           <div className="flex items-center justify-center gap-16 ">
             <div className="flex items-center justify-center">
               <img
-                className="w-[48px] h-[48px]"
+                className="w-[64px] h-[64px]"
                 src={
                   firstNavigation.name ===
                   "염곡IC에서 '양재대로, 서울추모공원' 방면으로 오른쪽 방향"
@@ -51,17 +51,20 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
                     : firstNavigation.name ===
                       "'반포한강공원' 방면으로 오른쪽 도시고속도로 출구"
                     ? "/marker/road-out.png"
-                    : firstNavigation.name === "주차장 입구 방면으로 오른쪽 방향"
+                    : firstNavigation.name ===
+                      "주차장 입구 방면으로 오른쪽 방향"
                     ? "/marker/arrow-slight-right.png"
                     : "/marker/arrow-right.png"
                 }
                 alt="direction"
               />
             </div>
-            <div className="flex flex-col">
-              <p className="text-[26px] font-bold ">{firstNavigation.name}</p>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-[36px] font-bold text-center ">
+                {firstNavigation.name}
+              </p>
 
-              <p className="text-[26px] font-bold">
+              <p className="text-[36px] font-bold">
                 {firstNavigation.remainingDistance >= 1000
                   ? `${(firstNavigation.remainingDistance / 1000).toFixed(
                       1
