@@ -1,5 +1,6 @@
 import { NavigationData } from "../../hooks/useSocket";
 import styled from "styled-components";
+import { hudCarImage } from "../../types/public/images";
 
 interface HudCarProps {
   navigationState: NavigationData;
@@ -77,7 +78,7 @@ const HudCarComponents = ({ navigationState }: HudCarProps) => {
     <div className="absolute left-[50%] bottom-[40%] transform -translate-x-1/2 -translate-y-1/2">
       {scale > 0 && (
         <img
-          src={CAR_IMAGE}
+          src={hudCarImage}
           alt="car-image"
           className={`transition-transform duration-300`}
           style={{ transform: `scale(${scale / 100})` }} // 부드러운 스케일 변화

@@ -4,6 +4,7 @@ import useSocket from "../../../hooks/useSocket";
 import { resetAllStores } from "../../../stroe/useResetAllStore";
 import TopVisionRoad from "./TopVisionRoad/TopVisionRoad";
 import HudCarComponents from "../../HudCar/HudCarComponents";
+import { hdaIconImg } from "../../../types/public/images";
 
 const Main = () => {
   const {
@@ -206,7 +207,7 @@ const Main = () => {
                   : "left-[34%]"
               }`}
             >
-              <img src={"/hda4/hda4-icon.png"} alt="hda4-icons" />
+              <img src={hdaIconImg} alt="hda4-icons" />
               <div className="flex flex-col items-center justify-center">
                 <p className="text-[72px]">
                   {navigationState.velocityData.sCCTargetActorSpeed}
@@ -215,8 +216,6 @@ const Main = () => {
                   CRUISE
                 </p>
               </div>
-
-             
             </div>
           )}
         </div>

@@ -1,4 +1,10 @@
 import { NavigationData } from "../../../../hooks/useSocket";
+import {
+  arrowRightImg,
+  arrowSlightRightImage,
+  roadInImg,
+  roadOutImg,
+} from "../../../../types/public/images";
 
 interface TopVisionRoadProps {
   navigationState: NavigationData;
@@ -35,25 +41,25 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
                 src={
                   firstNavigation.name ===
                   "염곡IC에서 '양재대로, 서울추모공원' 방면으로 오른쪽 방향"
-                    ? "/marker/arrow-slight-right.png"
+                    ? arrowSlightRightImage
                     : firstNavigation.name === "'양재IC' 방면으로 우회전"
-                    ? "/marker/arrow-right.png"
+                    ? arrowRightImg
                     : firstNavigation.name ===
                       "양재IC에서 '한남대교, 서초IC' 방면으로 오른쪽 고속도로 진입"
-                    ? "/marker/road-in.png"
+                    ? roadInImg
                     : firstNavigation.name ===
                       "양재IC에서 '한남대교, 서초IC' 방면으로 오른쪽 방향"
-                    ? "/marker/arrow-slight-right.png"
+                    ? arrowSlightRightImage
                     : firstNavigation.name ===
                       "한남IC에서 '올림픽대로(김포공항)' 방면으로 오른쪽 고속도로 출구"
-                    ? "/marker/road-out.png"
+                    ? roadOutImg
                     : firstNavigation.name ===
                       "'반포한강공원' 방면으로 오른쪽 도시고속도로 출구"
-                    ? "/marker/road-out.png"
+                    ? roadOutImg
                     : firstNavigation.name ===
                       "주차장 입구 방면으로 오른쪽 방향"
-                    ? "/marker/arrow-slight-right.png"
-                    : "/marker/arrow-right.png"
+                    ? arrowSlightRightImage
+                    : arrowRightImg
                 }
                 alt="direction"
               />
