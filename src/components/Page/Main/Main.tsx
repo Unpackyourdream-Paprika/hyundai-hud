@@ -216,7 +216,7 @@ const Main = () => {
                 </p>
               </div>
 
-              {/* <img src={"/left-electron/adcontrol.png"} alt="scc-img" /> */}
+             
             </div>
           )}
         </div>

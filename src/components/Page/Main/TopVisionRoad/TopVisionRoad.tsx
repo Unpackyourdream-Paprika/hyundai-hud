@@ -1,4 +1,3 @@
-import React from "react";
 import { NavigationData } from "../../../../hooks/useSocket";
 
 interface TopVisionRoadProps {
@@ -19,11 +18,11 @@ export default function TopVisionRoad({ navigationState }: TopVisionRoadProps) {
       navigationState?.velocityData.remainingDistanceToNextSpline || 0,
   };
 
-  const secondNavigation = {
-    isVisible: navigationState?.velocityData.bEnableNextSpline || false,
-    name: navigationState?.velocityData.nextSplineName || "",
-    remainingDistance: navigationState?.velocityData.nextSplineDistance || 0,
-  };
+  // const secondNavigation = {
+  //   isVisible: navigationState?.velocityData.bEnableNextSpline || false,
+  //   name: navigationState?.velocityData.nextSplineName || "",
+  //   remainingDistance: navigationState?.velocityData.nextSplineDistance || 0,
+  // };
 
   return (
     <div className="flex flex-row gap-[60px] items-start w-full h-full p-[100px]  justify-center">

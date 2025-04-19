@@ -1,54 +1,41 @@
-import { app, BrowserWindow } from "electron";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-process.env.APP_ROOT = path.join(__dirname, "..");
-const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
-const MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
-const RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
-process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, "public") : RENDERER_DIST;
-let win;
-function createWindow() {
-  win = new BrowserWindow({
+import { app as n, BrowserWindow as i } from "electron";
+import { fileURLToPath as l } from "node:url";
+import o from "node:path";
+const s = o.dirname(l(import.meta.url));
+process.env.APP_ROOT = o.join(s, "..");
+const t = process.env.VITE_DEV_SERVER_URL, m = o.join(process.env.APP_ROOT, "dist-electron"), r = o.join(process.env.APP_ROOT, "dist");
+process.env.VITE_PUBLIC = t ? o.join(process.env.APP_ROOT, "public") : r;
+let e;
+function a() {
+  e = new i({
     width: 1920,
     // 원하는 너비
     height: 1080,
     // 원하는 높이
-    frame: false,
+    frame: !1,
     // 프레임 제거
     titleBarStyle: "hidden",
     // 타이틀 바 숨기기
-    transparent: true,
+    transparent: !0,
     // 배경 투명하게 (선택사항)
     // fullscreenable: true,
-    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+    icon: o.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     webPreferences: {
-      preload: path.join(__dirname, "preload.mjs")
+      preload: o.join(s, "preload.mjs")
     }
-  });
-  win.webContents.on("did-finish-load", () => {
-    win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  });
-  if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL);
-  } else {
-    win.loadFile(path.join(RENDERER_DIST, "index.html"));
-  }
+  }), e.webContents.on("did-finish-load", () => {
+    e == null || e.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
+  }), t ? e.loadURL(t) : e.loadFile(o.join(r, "index.html"));
 }
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-    win = null;
-  }
+n.on("window-all-closed", () => {
+  process.platform !== "darwin" && (n.quit(), e = null);
 });
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+n.on("activate", () => {
+  i.getAllWindows().length === 0 && a();
 });
-app.whenReady().then(createWindow);
+n.whenReady().then(a);
 export {
-  MAIN_DIST,
-  RENDERER_DIST,
-  VITE_DEV_SERVER_URL
+  m as MAIN_DIST,
+  r as RENDERER_DIST,
+  t as VITE_DEV_SERVER_URL
 };
